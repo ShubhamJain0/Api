@@ -1,6 +1,7 @@
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status
+from rest_framework import viewsets
 from .serializers import HomeSerializer
 
 # Create your views here.
@@ -35,3 +36,48 @@ class FirstView(APIView):
 	def delete(self, request, pk=None):
 		"""It deletes the specified object"""
 		return Response({'message':'done!'})
+
+
+
+
+
+class FirstViewSet(viewsets.ViewSet):
+	"""An ViewSet class"""
+	serializer_class = HomeSerializer
+
+
+	def list(self, request):
+		"""It returns a response"""
+		return Response({'message':'Hello'})
+
+	def create(self, request):
+		"""It is similar to post method in APIView"""
+		serializer = self.serializer_class(data=request.data)
+
+		if serializer.is_valid():
+			name = serializer.validated_data.get('name')
+			return Response({'message':f'Hello {name}'})
+		else:
+			return Response(
+				serializer.errors,
+				status=status.HTTP_400_BAD_REQUEST
+				)
+
+	def retreive(self, request, pk=None):
+		"""It is similar to get method in APIView, but it retrieves based on primary key"""
+		return Response({'method':'GET'})
+
+	def update(self, request, pk=None):
+		"""It is similar to put method in APIView, it updates the entire object"""
+		return Response({'method':'PUT'})
+
+	def partial_update(self, request, pk=None):
+		"""It is similar to patch method in APIView, it updates part of the object"""
+		return Response({'method':'PATCH'})
+
+	def destroy(self, request, pk=None):
+		"""It is similar to delete method in APIView"""
+		return Response({'method':'delete'})
+
+
+
