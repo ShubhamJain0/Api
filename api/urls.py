@@ -12,6 +12,7 @@ router.register('profiles', views.UserProfileViewSet)
 urlpatterns = [
 	
 	path('home/', views.FirstView.as_view()),
+	path('login/', views.UserProfileAuthentication.as_view()),
 	path('', include(router.urls)),
 
 ]
