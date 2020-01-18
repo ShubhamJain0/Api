@@ -12,7 +12,7 @@ class UserProfileSerializer(serializers.ModelSerializer):
 
 	class Meta:
 		model = models.UserProfile
-		fields = ('id','email', 'name', 'password')
+		fields = ('id', 'email', 'name', 'password')
 		extra_kwargs = {
 
 		'password': {
@@ -31,3 +31,13 @@ class UserProfileSerializer(serializers.ModelSerializer):
 			)
 
 		return user
+
+
+
+class ProfileStatusFeedSerializer(serializers.ModelSerializer):
+	"""It takes the input, and saves in the database"""
+
+	class Meta:
+		model = models.ProfileStatusFeed
+		fields = ('id', 'user_profile', 'status', 'created_on')
+		extra_kwargs = {'user_profile':{'read_only':True}}

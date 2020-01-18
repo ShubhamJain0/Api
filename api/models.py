@@ -2,6 +2,7 @@ from django.db import models
 from django.contrib.auth.models import AbstractBaseUser
 from django.contrib.auth.models import PermissionsMixin
 from django.contrib.auth.models import BaseUserManager
+from django.conf import settings
 # Create your models here.
 
 
@@ -58,3 +59,16 @@ class UserProfile(AbstractBaseUser, PermissionsMixin):
 	def __str__(self):
 		"""returns str of email"""
 		return self.email
+
+
+
+class ProfileStatusFeed(models.Model):
+	"""It stores the status feed of the users in the database"""
+	user_profile = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
+	status = models.CharField(max_length=255, null=True)
+	created_on = models.DateTimeField(auto_now_add=True)
+
+
+	def __str__(self):
+		"""returns string version"""
+		return self.status
